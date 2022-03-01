@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SensorData">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lawny Sensor Data"
+        android:textSize="30dp"
+        android:padding="10dp"
+        android:textColor="@color/black" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:gravity="top"
+        android:layout_marginTop="100dp"
+        card_view:cardBackgroundColor="@color/white"
+        card_view:cardCornerRadius="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:paddingLeft="25dp"
+            android:background="@color/purple_200">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ultrasonic Sensor Data"
+                android:textSize="20dp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <TableLayout
+            android:id="@+id/ultrasonic_table"
+            android:layout_marginTop="35dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal">
+                <TextView
+                    android:text="Front"
+                    android:layout_weight="1"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+                <TextView
+                    android:id="@+id/ultrasonic_front"
+                    android:text = "NA"
+                    android:layout_width="200dp"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center">
+                <TextView
+
+                    android:text="Front Left"
+                    android:layout_weight="1"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+                <TextView
+                    android:id="@+id/ultrasonic_front_left"
+                    android:text = "NA"
+                    android:layout_width="200dp"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal">
+                <TextView
+                    android:text="Left"
+                    android:layout_weight="1"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+                <TextView
+                    android:id="@+id/ultrasonic_left"
+                    android:text = "NA"
+                    android:layout_width="200dp"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal">
+                <TextView
+                    android:text="Back Left"
+                    android:layout_weight="1"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+                <TextView
+                    android:id="@+id/ultrasonic_back_left"
+                    android:text = "NA"
+                    android:layout_width="200dp"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal">
+                <TextView
+                    android:text="Back"
+                    android:layout_weight="1"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+                <TextView
+                    android:id="@+id/ultrasonic_back"
+                    android:text = "NA"
+                    android:layout_width="200dp"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal">
+                <TextView
+                    android:text="Back Right"
+                    android:layout_weight="1"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+                <TextView
+                    android:id="@+id/ultrasonic_back_right"
+                    android:text = "NA"
+                    android:layout_width="200dp"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal">
+                <TextView
+                    android:text="Right"
+                    android:layout_weight="1"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+                <TextView
+                    android:id="@+id/ultrasonic_right"
+                    android:text = "NA"
+                    android:layout_width="200dp"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal">
+                <TextView
+                    android:text="Front Right"
+                    android:layout_weight="1"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+                <TextView
+                    android:id="@+id/ultrasonic_front_right"
+                    android:text = "NA"
+                    android:layout_width="200dp"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+            </TableRow>
+
+        </TableLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="133dp"
+        android:layout_marginTop="320dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:paddingLeft="25dp"
+            android:background="@color/purple_200">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Temperature Sensor Data"
+                android:textSize="20dp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <TableLayout
+            android:id="@+id/temperature_table"
+            android:layout_marginTop="35dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal">
+                <TextView
+                    android:text="Sensor 1"
+                    android:layout_weight="1"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+                <TextView
+                    android:id="@+id/temp_sensor_1"
+                    android:text = "NA"
+                    android:layout_width="200dp"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal">
+                <TextView
+                    android:text="Sensor 2"
+                    android:layout_weight="1"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+                <TextView
+                    android:id="@+id/temp_sensor_2"
+                    android:text = "NA"
+                    android:layout_width="200dp"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal">
+                <TextView
+                    android:text="Sensor 3"
+                    android:layout_weight="1"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+                <TextView
+                    android:id="@+id/temp_sensor_3"
+                    android:text = "NA"
+                    android:layout_width="200dp"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal">
+                <TextView
+                    android:text="Sensor 4"
+                    android:layout_weight="1"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+                <TextView
+                    android:id="@+id/temp_sensor_4"
+                    android:text = "NA"
+                    android:layout_width="200dp"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal">
+                <TextView
+                    android:text="Sensor 5"
+                    android:layout_weight="1"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+                <TextView
+                    android:id="@+id/temp_sensor_5"
+                    android:text = "NA"
+                    android:layout_width="200dp"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+            </TableRow>
+        </TableLayout>
+
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="133dp"
+        android:layout_marginTop="483dp">
+
+        <LinearLayout android:orientation="horizontal" android:layout_height="fill_parent" android:layout_width="fill_parent" >
+            <LinearLayout android:layout_weight="1" android:layout_height="fill_parent" android:layout_width="0dp" android:orientation="vertical" android:background="@drawable/data_border">
+                <TextView
+                    android:text = "Gyroscope Angle"
+                    android:layout_width="match_parent"
+                    android:textColor="#000000"
+                    android:gravity="center"
+                    android:layout_height="40dp"/>
+                <TextView
+                    android:id="@+id/gyroscope_data"
+                    android:text = "NA"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="15dp"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+            </LinearLayout>
+            <LinearLayout android:layout_weight="1" android:layout_height="fill_parent" android:layout_width="0dp" android:orientation="vertical" android:background="@drawable/data_border">
+                <TextView
+                    android:text = "Lawny Speed"
+                    android:layout_width="match_parent"
+                    android:textColor="#000000"
+                    android:gravity="center"
+                    android:layout_height="40dp"/>
+                <TextView
+                    android:id="@+id/speed_data"
+                    android:text = "NA"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="15dp"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>
