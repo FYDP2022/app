@@ -10,7 +10,7 @@ import com.example.lawny_proj.databinding.ActivityMainBinding
 class LawnyCanvas(context: Context, val rootBinding: ActivityMainBinding): View(context) {
 
     fun drawMap(updateImg: Bitmap) {
-        rootBinding.TestImage.setImageBitmap(updateImg)
+        //rootBinding.TestImage.setImageBitmap(updateImg)
         var imgSize = Rect(0,0,updateImg.width, updateImg.height)
         try {
             var currentDraw = Canvas(updateImg)

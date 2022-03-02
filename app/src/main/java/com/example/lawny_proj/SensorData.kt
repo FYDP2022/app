@@ -1,59 +1,68 @@
 package com.example.lawny_proj
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.lawny_proj.databinding.FragmentSensorDataBinding
+import androidx.annotation.NonNull
+import com.example.lawny_proj.modules.LawnyMqttHelper
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
  * Use the [SensorData.newInstance] factory method to
  * create an instance of this fragment.
  */
-class SensorData : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+private var testval: String = ""
+private lateinit var binding: FragmentSensorDataBinding
+
+class SensorData : Fragment(R.layout.fragment_sensor_data) {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sensor_data, container, false)
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = FragmentSensorDataBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SensorData.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SensorData().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    fun setUltrasonic(incoming_ultrasonic: List<String>) {
+        when(incoming_ultrasonic[0]) {
+            "F" -> binding.ultrasonicFront.text = incoming_ultrasonic[1]
+            "FL" -> binding.ultrasonicFrontLeft.text = incoming_ultrasonic[1]
+            "L" -> binding.ultrasonicLeft.text = incoming_ultrasonic[1]
+            "BL" -> binding.ultrasonicBackLeft.text = incoming_ultrasonic[1]
+            "B" -> binding.ultrasonicBack.text = incoming_ultrasonic[1]
+            "BR" -> binding.ultrasonicBackRight.text = incoming_ultrasonic[1]
+            "R" -> binding.ultrasonicRight.text = incoming_ultrasonic[1]
+            "FR" -> binding.ultrasonicFrontRight.text = incoming_ultrasonic[1]
+            else -> {
+                Log.e(tag, "Invalid Ultrasonic Sensor Identifier")
             }
+        }
     }
+    fun setTemperature(incoming_temperature: List<String>) {
+        when(incoming_temperature[0]) {
+            "Sensor1" -> binding.tempSensor1.text = incoming_temperature[1]
+            "Sensor2" -> binding.tempSensor2.text = incoming_temperature[1]
+            "Sensor3" -> binding.tempSensor3.text = incoming_temperature[1]
+            "Sensor4" -> binding.tempSensor4.text = incoming_temperature[1]
+            "Sensor5" -> binding.tempSensor5.text = incoming_temperature[1]
+            else -> {
+                Log.e(tag, "Invalid Temperature Sensor Identifier")
+            }
+        }
+    }
+    fun setBattery(incoming_battery: String) {
+       binding.batteryData.text = incoming_battery
+    }
+
 }

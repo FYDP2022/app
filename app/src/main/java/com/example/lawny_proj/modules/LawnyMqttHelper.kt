@@ -1,21 +1,29 @@
 package com.example.lawny_proj.modules
 
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.util.Log
-import com.example.lawny_proj.databinding.ActivityMainBinding
 import org.eclipse.paho.android.service.MqttAndroidClient
 import org.eclipse.paho.client.mqttv3.*
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions
-import android.util.Base64
 
-class LawnyMqttHelper(context: Context, rootBinding: ActivityMainBinding, canvas: LawnyCanvas) {
+class LawnyMqttHelper(context: Context) {
+
+
+    interface SendToFragment {
+        fun sendUltrasonic(incoming_ultrasonic: List<String>)
+        fun sendTemperature(incoming_temperature: List<String>)
+        fun sendBattery(incoming_battery: String)
+        fun setImage(incoming_image: String)
+    }
     var mqttAndroidClient: MqttAndroidClient
     val serverUri = "tcp://10.0.2.2:1883"
     val clientId = "LawnyClient"
     val tag = "Lawny_Mqtt_Client"
 
     init {
+        var activityReference = context as SendToFragment
+
+
         mqttAndroidClient = MqttAndroidClient(context, serverUri, clientId)
         mqttAndroidClient.setCallback(object: MqttCallbackExtended {
             override fun connectComplete(reconnect: Boolean, serverURI: String?) {
@@ -33,15 +41,16 @@ class LawnyMqttHelper(context: Context, rootBinding: ActivityMainBinding, canvas
             override fun messageArrived(topic: String, message: MqttMessage) {
                 Log.v(tag, " Message Received from Topic: $topic, message: ${message.toString()}")
                 if (topic == "TemperatureTopic") {
-                    rootBinding.temp.setText(message.toString())
+                    activityReference.sendTemperature(message.toString().split(":"))
+
+                } else if (topic == "UltrasonicTopic") {
+                    activityReference.sendUltrasonic(message.toString().split(":"))
+
                 } else if (topic == "BatteryTopic") {
-                    rootBinding.battery.setText(message.toString())
+                    activityReference.sendBattery(message.toString())
+
                 } else if (topic == "ImageTopic") {
-                    val data = Base64.decode(message.toString(), Base64.DEFAULT)
-                    val bfOptions = BitmapFactory.Options()
-                    bfOptions.inMutable = true
-                    var converted_img = BitmapFactory.decodeByteArray(data, 0, data.size, bfOptions)
-                    canvas.drawMap(converted_img)
+                    activityReference.setImage(message.toString())
                     //rootBinding.TestImage.setImageBitmap(converted_img)
 
                     /*val path: File = context.filesDir
