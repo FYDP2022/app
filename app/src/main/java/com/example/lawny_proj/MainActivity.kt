@@ -1,45 +1,35 @@
 package com.example.lawny_proj
 
-import android.hardware.Sensor
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.core.view.isVisible
 import com.example.lawny_proj.databinding.ActivityMainBinding
-import com.example.lawny_proj.modules.LawnyCanvas
 import com.example.lawny_proj.modules.LawnyMqttHelper
 
 private lateinit var binding: ActivityMainBinding
 lateinit var MqttHelper: LawnyMqttHelper
-lateinit var lawnyCanvas: LawnyCanvas
 lateinit var SensorFragment: SensorData
 lateinit var MapFragment: LawnyMap
 
 class MainActivity : AppCompatActivity(), LawnyMqttHelper.SendToFragment {
 
     override fun sendUltrasonic(incoming_ultrasonic: List<String>) {
-        if (SensorFragment.isVisible) {
-            SensorFragment.setUltrasonic(incoming_ultrasonic)
-        }
+        SensorFragment.setUltrasonic(incoming_ultrasonic)
     }
 
     override fun sendTemperature(incoming_temperature: List<String>) {
-        if (SensorFragment.isVisible) {
-            SensorFragment.setTemperature(incoming_temperature)
-        }
+        SensorFragment.setTemperature(incoming_temperature)
     }
 
     override fun sendBattery(incoming_battery: String) {
-        if (SensorFragment.isVisible) {
-            SensorFragment.setBattery(incoming_battery)
-        }
+        SensorFragment.setBattery(incoming_battery)
     }
 
     override fun setImage(incoming_image: String) {
-        if (MapFragment.isVisible) {
-            MapFragment.setImage(incoming_image)
-        }
+        MapFragment.setImage(incoming_image)
+    }
+    override fun setLawnyPosition(incoming_position: List<String>) {
+        MapFragment.setPosition(incoming_position)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +44,7 @@ class MainActivity : AppCompatActivity(), LawnyMqttHelper.SendToFragment {
         MqttHelper = LawnyMqttHelper(this)
 
         binding.startButton.setOnClickListener {
-            MqttHelper.subscribe("TestTopic")
+            MqttHelper.subscribe("PositionTopic")
             MqttHelper.subscribe("ImageTopic")
             MqttHelper.subscribe("TemperatureTopic")
             MqttHelper.subscribe("BatteryTopic")

@@ -14,6 +14,7 @@ class LawnyMqttHelper(context: Context) {
         fun sendTemperature(incoming_temperature: List<String>)
         fun sendBattery(incoming_battery: String)
         fun setImage(incoming_image: String)
+        fun setLawnyPosition(incoming_position: List<String>)
     }
     var mqttAndroidClient: MqttAndroidClient
     val serverUri = "tcp://10.0.2.2:1883"
@@ -40,34 +41,14 @@ class LawnyMqttHelper(context: Context) {
 
             override fun messageArrived(topic: String, message: MqttMessage) {
                 Log.v(tag, " Message Received from Topic: $topic, message: ${message.toString()}")
-                if (topic == "TemperatureTopic") {
-                    activityReference.sendTemperature(message.toString().split(":"))
-
-                } else if (topic == "UltrasonicTopic") {
-                    activityReference.sendUltrasonic(message.toString().split(":"))
-
-                } else if (topic == "BatteryTopic") {
-                    activityReference.sendBattery(message.toString())
-
-                } else if (topic == "ImageTopic") {
-                    activityReference.setImage(message.toString())
-                    //rootBinding.TestImage.setImageBitmap(converted_img)
-
-                    /*val path: File = context.filesDir
-                    Log.d("path_location", path.toString())
-
-                    val file: File = File(path, "receivejgp.jpg")
-                    val stream = FileOutputStream(file)
-                    val data = Base64.decode(message.toString(), Base64.DEFAULT)
-                    try {
-                        stream.write(data)
-                    } finally {
-                        stream.close()
-                    }*/
-                    //Log.d("XD", message.payload.toString())
+                when(topic) {
+                    "TemperatureTopic" -> activityReference.sendTemperature(message.toString().split(":"))
+                    "UltrasonicTopic" -> activityReference.sendUltrasonic(message.toString().split(":"))
+                    "BatteryTopic" -> activityReference.sendBattery(message.toString())
+                    "ImageTopic" -> activityReference.setImage(message.toString())
+                    "PositionTopic" -> activityReference.setLawnyPosition(message.toString().split(":"))
                 }
             }
-
         })
 
         val mqttConnectOptions = MqttConnectOptions()

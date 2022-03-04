@@ -4,34 +4,38 @@ import android.content.Context
 import android.graphics.*
 import android.util.Log
 import android.view.View
-import com.example.lawny_proj.databinding.ActivityMainBinding
+import com.example.lawny_proj.databinding.FragmentLawnyMapBinding
 
 
-class LawnyCanvas(context: Context, val rootBinding: ActivityMainBinding): View(context) {
+class LawnyCanvas(private val rootBinding: FragmentLawnyMapBinding) {
+    lateinit var drawCanvas: Canvas
+    lateinit var img: Bitmap
 
-    fun drawMap(updateImg: Bitmap) {
-        //rootBinding.TestImage.setImageBitmap(updateImg)
-        var imgSize = Rect(0,0,updateImg.width, updateImg.height)
+    fun setImageAndCanvas(mapImage: Bitmap) {
+        var imgSize = Rect(0,0,mapImage.width, mapImage.height)
         try {
-            var currentDraw = Canvas(updateImg)
-            currentDraw.drawBitmap(updateImg, null, imgSize, null)
-            var paint = Paint()
-            paint.isAntiAlias = true
-            paint.isDither = true
-            paint.style = Paint.Style.STROKE
-            paint.strokeJoin = Paint.Join.MITER
-            paint.strokeCap = Paint.Cap.SQUARE
-            paint.color = Color.RED
-            paint.strokeWidth = 16F
-            paint.alpha = 100
-            currentDraw.drawLine(0F, 0F, 1000F, 1000F, paint)
-
-            //rootBinding.TestImage.setImageBitmap(updateImg)
-            //rootBinding.TestImage.setImageBitmap(currentDraw)
+            img = mapImage.copy(mapImage.config, true)
+            drawCanvas = Canvas(img)
+            drawCanvas.drawBitmap(img, null, imgSize, null)
+            rootBinding.map.setImageBitmap(img)
         }
         catch (e: Exception) {
             Log.d("drawEx", e.toString())
         }
+    }
 
+    fun drawPosition(x: Int, y: Int) {
+        var paint = Paint()
+        paint.isAntiAlias = true
+        paint.isDither = true
+        paint.style = Paint.Style.STROKE
+        paint.strokeJoin = Paint.Join.MITER
+        paint.strokeCap = Paint.Cap.SQUARE
+        paint.color = Color.RED
+        paint.strokeWidth = 16F
+        paint.alpha = 100
+        drawCanvas = Canvas(img)
+        drawCanvas.drawCircle(200f, 200f, 20f, paint)
+        rootBinding.map.setImageBitmap(img)
     }
 }
