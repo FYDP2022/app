@@ -49,8 +49,9 @@ class LawnyMap : Fragment(R.layout.fragment_lawny_map) {
     fun setPosition(incoming_position: List<String>) {
         try {
             val pos_x = Integer.parseInt(incoming_position[0])
-            val pos_y = Integer.parseInt(incoming_position[0])
-            lcanvas.drawPosition(pos_x, pos_y)
+            val pos_y = Integer.parseInt(incoming_position[1])
+            val angle = Integer.parseInt(incoming_position[2])
+            lcanvas.drawPosition(pos_x, pos_y, angle)
         } catch (nfe: NumberFormatException) {
             println("Could not parse $nfe")
         }

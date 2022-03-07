@@ -10,13 +10,14 @@ import com.example.lawny_proj.databinding.FragmentLawnyMapBinding
 class LawnyCanvas(private val rootBinding: FragmentLawnyMapBinding) {
     lateinit var drawCanvas: Canvas
     lateinit var img: Bitmap
+    lateinit var plain_img: Bitmap
 
     fun setImageAndCanvas(mapImage: Bitmap) {
         var imgSize = Rect(0,0,mapImage.width, mapImage.height)
         try {
+            plain_img = mapImage.copy(mapImage.config, true)
             img = mapImage.copy(mapImage.config, true)
             drawCanvas = Canvas(img)
-            drawCanvas.drawBitmap(img, null, imgSize, null)
             rootBinding.map.setImageBitmap(img)
         }
         catch (e: Exception) {
@@ -24,7 +25,7 @@ class LawnyCanvas(private val rootBinding: FragmentLawnyMapBinding) {
         }
     }
 
-    fun drawPosition(x: Int, y: Int) {
+    fun drawPosition(x: Int, y: Int, angle: Int) {
         var paint = Paint()
         paint.isAntiAlias = true
         paint.isDither = true
@@ -34,8 +35,33 @@ class LawnyCanvas(private val rootBinding: FragmentLawnyMapBinding) {
         paint.color = Color.RED
         paint.strokeWidth = 16F
         paint.alpha = 100
+        img = plain_img.copy(plain_img.config, true)
         drawCanvas = Canvas(img)
-        drawCanvas.drawCircle(200f, 200f, 20f, paint)
+        drawCanvas.save()
+        drawCanvas.rotate(angle.toFloat(), x.toFloat(), y.toFloat())
+        drawTriangle(x,y)
+        drawCanvas.restore()
         rootBinding.map.setImageBitmap(img)
+    }
+
+    private fun drawTriangle(x: Int, y: Int) {
+        var paint = Paint()
+        paint.strokeWidth = 3f
+        paint.color = Color.RED
+        paint.style = Paint.Style.FILL_AND_STROKE
+        paint.isAntiAlias = true
+
+        val bottom_left_point = Point(x-10, y-10)
+        val bottom_right_point = Point(x+10, y-10)
+        val top_point = Point(x, y+10)
+
+        val path = Path()
+        path.fillType = Path.FillType.EVEN_ODD
+        path.moveTo(bottom_left_point.x.toFloat(), bottom_left_point.y.toFloat())
+        path.lineTo(bottom_right_point.x.toFloat(), bottom_right_point.y.toFloat())
+        path.lineTo(top_point.x.toFloat(), top_point.y.toFloat())
+        path.close()
+
+        drawCanvas.drawPath(path, paint);
     }
 }
