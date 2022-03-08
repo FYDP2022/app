@@ -35,6 +35,7 @@ class SensorData : Fragment(R.layout.fragment_sensor_data) {
             } else {
                 text.setTextColor(Color.BLACK)
             }
+            text.text = p0.toString() + " C"
         }
     }
 
@@ -44,7 +45,7 @@ class SensorData : Fragment(R.layout.fragment_sensor_data) {
 
         override fun afterTextChanged(p0: Editable?) {
             var text_val = Integer.parseInt(p0.toString())
-            if (text_val < 10 || text_val > 50) {
+            if (text_val <= 10 || text_val > 50) {
                 text.setTextColor(Color.RED)
             } else {
                 text.setTextColor(Color.BLACK)
@@ -85,7 +86,7 @@ class SensorData : Fragment(R.layout.fragment_sensor_data) {
                 if (text_val > 100 || text_val <= 10) {
                     binding.batteryData.setTextColor(Color.RED)
                 } else if (text_val > 10 && text_val <= 25) {
-                    binding.batteryData.setTextColor(Color.YELLOW)
+                    binding.batteryData.setTextColor(Color.rgb(204,204,0))
                 } else {
                     binding.batteryData.setTextColor(Color.GREEN)
                 }
@@ -127,14 +128,14 @@ class SensorData : Fragment(R.layout.fragment_sensor_data) {
 
     fun setUltrasonic(incoming_ultrasonic: List<String>) {
         when(incoming_ultrasonic[0]) {
-            "F" -> binding.ultrasonicFront.text = incoming_ultrasonic[1] + " cm"
-            "FL" -> binding.ultrasonicFrontLeft.text = incoming_ultrasonic[1]+ " cm"
-            "L" -> binding.ultrasonicLeft.text = incoming_ultrasonic[1]+ " cm"
-            "BL" -> binding.ultrasonicBackLeft.text = incoming_ultrasonic[1]+ " cm"
-            "B" -> binding.ultrasonicBack.text = incoming_ultrasonic[1]+ " cm"
-            "BR" -> binding.ultrasonicBackRight.text = incoming_ultrasonic[1]+ " cm"
-            "R" -> binding.ultrasonicRight.text = incoming_ultrasonic[1]+ " cm"
-            "FR" -> binding.ultrasonicFrontRight.text = incoming_ultrasonic[1]+ " cm"
+            "F" -> binding.ultrasonicFront.text = incoming_ultrasonic[1]
+            "FL" -> binding.ultrasonicFrontLeft.text = incoming_ultrasonic[1]
+            "L" -> binding.ultrasonicLeft.text = incoming_ultrasonic[1]
+            "BL" -> binding.ultrasonicBackLeft.text = incoming_ultrasonic[1]
+            "B" -> binding.ultrasonicBack.text = incoming_ultrasonic[1]
+            "BR" -> binding.ultrasonicBackRight.text = incoming_ultrasonic[1]
+            "R" -> binding.ultrasonicRight.text = incoming_ultrasonic[1]
+            "FR" -> binding.ultrasonicFrontRight.text = incoming_ultrasonic[1]
             else -> {
                 Log.e(tag, "Invalid Ultrasonic Sensor Identifier")
             }
@@ -142,18 +143,18 @@ class SensorData : Fragment(R.layout.fragment_sensor_data) {
     }
     fun setTemperature(incoming_temperature: List<String>) {
         when(incoming_temperature[0]) {
-            "Sensor1" -> binding.tempSensor1.text = incoming_temperature[1] + " C"
-            "Sensor2" -> binding.tempSensor2.text = incoming_temperature[1] + " C"
-            "Sensor3" -> binding.tempSensor3.text = incoming_temperature[1] + " C"
-            "Sensor4" -> binding.tempSensor4.text = incoming_temperature[1] + " C"
-            "Sensor5" -> binding.tempSensor5.text = incoming_temperature[1] + " C"
+            "Sensor1" -> binding.tempSensor1.text = incoming_temperature[1]
+            "Sensor2" -> binding.tempSensor2.text = incoming_temperature[1]
+            "Sensor3" -> binding.tempSensor3.text = incoming_temperature[1]
+            "Sensor4" -> binding.tempSensor4.text = incoming_temperature[1]
+            "Sensor5" -> binding.tempSensor5.text = incoming_temperature[1]
             else -> {
                 Log.e(tag, "Invalid Temperature Sensor Identifier")
             }
         }
     }
     fun setBattery(incoming_battery: String) {
-       binding.batteryData.text = "$incoming_battery%"
+       binding.batteryData.text = incoming_battery
     }
 
 }

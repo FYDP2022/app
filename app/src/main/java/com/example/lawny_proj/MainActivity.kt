@@ -2,9 +2,11 @@ package com.example.lawny_proj
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.core.view.isVisible
 import com.example.lawny_proj.databinding.ActivityMainBinding
 import com.example.lawny_proj.modules.LawnyMqttHelper
+import kotlin.system.exitProcess
 
 private lateinit var binding: ActivityMainBinding
 lateinit var MqttHelper: LawnyMqttHelper
@@ -55,8 +57,13 @@ class MainActivity : AppCompatActivity(), LawnyMqttHelper.SendToFragment {
                 hide(MapFragment)
                 commit()
             }
-            binding.startButton.isVisible = false
-            binding.startButton.isEnabled = false
+            MqttHelper.publish("StartStopTopic", "START")
+
+            binding.startButton.text = "STOP"
+            binding.startButton.setOnClickListener {
+                MqttHelper.publish("StartStopTopic", "STOP")
+                this.finish()
+            }
         }
         binding.dataFragmentBtn.setOnClickListener {
             supportFragmentManager.beginTransaction().apply {
@@ -78,11 +85,6 @@ class MainActivity : AppCompatActivity(), LawnyMqttHelper.SendToFragment {
 
     override fun onRestart() {
         super.onRestart()
-
     }
-    fun test() {
-        print("XD")
-    }
-
 
 }
