@@ -2,7 +2,7 @@ package com.example.lawny_proj.modules
 
 import android.content.Context
 import android.util.Log
-import org.eclipse.paho.android.service.MqttAndroidClient
+import info.mqtt.android.service.MqttAndroidClient
 import org.eclipse.paho.client.mqttv3.*
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions
 
@@ -17,7 +17,7 @@ class LawnyMqttHelper(context: Context) {
         fun setLawnyPosition(incoming_position: List<String>)
     }
     var mqttAndroidClient: MqttAndroidClient
-    val serverUri = "tcp://10.0.2.2:1883"
+    val serverUri = "tcp://10.0.0.175:1883"
     val clientId = "LawnyClient"
     val tag = "Lawny_Mqtt_Client"
 
