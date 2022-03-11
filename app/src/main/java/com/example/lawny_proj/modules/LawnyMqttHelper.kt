@@ -8,22 +8,22 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions
 
 class LawnyMqttHelper(context: Context) {
 
-
     interface SendToFragment {
         fun sendUltrasonic(incoming_ultrasonic: List<String>)
         fun sendTemperature(incoming_temperature: List<String>)
         fun sendBattery(incoming_battery: String)
         fun setImage(incoming_image: String)
         fun setLawnyPosition(incoming_position: List<String>)
+        fun sendGyroscope(incoming_gyroscope: String)
+        fun sendAcceleration(incoming_acceleration: String)
     }
     var mqttAndroidClient: MqttAndroidClient
-    val serverUri = "tcp://10.0.0.175:1883"
+    val serverUri = "tcp://10.0.0.170:1883"
     val clientId = "LawnyClient"
     val tag = "Lawny_Mqtt_Client"
 
     init {
         var activityReference = context as SendToFragment
-
 
         mqttAndroidClient = MqttAndroidClient(context, serverUri, clientId)
         mqttAndroidClient.setCallback(object: MqttCallbackExtended {
@@ -47,6 +47,8 @@ class LawnyMqttHelper(context: Context) {
                     "BatteryTopic" -> activityReference.sendBattery(message.toString())
                     "ImageTopic" -> activityReference.setImage(message.toString())
                     "PositionTopic" -> activityReference.setLawnyPosition(message.toString().split(":"))
+                    "GyroscopeTopic" -> activityReference.sendGyroscope(message.toString())
+                    "AccelerationTopic" -> activityReference.sendAcceleration(message.toString())
                 }
             }
         })

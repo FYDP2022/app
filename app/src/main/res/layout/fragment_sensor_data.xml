@@ -16,7 +16,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="190dp"
+        android:layout_height="180dp"
         android:gravity="top"
         android:layout_marginTop="80dp"
         card_view:cardBackgroundColor="@color/white"
@@ -112,22 +112,6 @@
                 android:layout_width="fill_parent"
                 android:gravity="center_horizontal">
                 <TextView
-                    android:text="Back"
-                    android:layout_weight="1"
-                    android:textColor="#000000"
-                    android:gravity="center"/>
-                <TextView
-                    android:id="@+id/ultrasonic_back"
-                    android:text = "NA"
-                    android:layout_width="200dp"
-                    android:textColor="#000000"
-                    android:gravity="center"/>
-            </TableRow>
-            <TableRow
-                android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
-                android:gravity="center_horizontal">
-                <TextView
                     android:text="Back Right"
                     android:layout_weight="1"
                     android:textColor="#000000"
@@ -178,8 +162,8 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="133dp"
-        android:layout_marginTop="300dp">
+        android:layout_height="143dp"
+        android:layout_marginTop="290dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -206,12 +190,12 @@
                 android:layout_width="fill_parent"
                 android:gravity="center_horizontal">
                 <TextView
-                    android:text="Sensor 1"
+                    android:text="BATTERY"
                     android:layout_weight="1"
                     android:textColor="#000000"
                     android:gravity="center"/>
                 <TextView
-                    android:id="@+id/temp_sensor_1"
+                    android:id="@+id/BATTERY"
                     android:text = "NA"
                     android:layout_width="200dp"
                     android:textColor="#000000"
@@ -222,12 +206,12 @@
                 android:layout_width="fill_parent"
                 android:gravity="center_horizontal">
                 <TextView
-                    android:text="Sensor 2"
+                    android:text="LEFT DRIVE"
                     android:layout_weight="1"
                     android:textColor="#000000"
                     android:gravity="center"/>
                 <TextView
-                    android:id="@+id/temp_sensor_2"
+                    android:id="@+id/LEFTDRIVE"
                     android:text = "NA"
                     android:layout_width="200dp"
                     android:textColor="#000000"
@@ -238,12 +222,12 @@
                 android:layout_width="fill_parent"
                 android:gravity="center_horizontal">
                 <TextView
-                    android:text="Sensor 3"
+                    android:text="RIGHT DRIVE"
                     android:layout_weight="1"
                     android:textColor="#000000"
                     android:gravity="center"/>
                 <TextView
-                    android:id="@+id/temp_sensor_3"
+                    android:id="@+id/RIGHTDRIVE"
                     android:text = "NA"
                     android:layout_width="200dp"
                     android:textColor="#000000"
@@ -254,12 +238,12 @@
                 android:layout_width="fill_parent"
                 android:gravity="center_horizontal">
                 <TextView
-                    android:text="Sensor 4"
+                    android:text="CUTTING MOTOR"
                     android:layout_weight="1"
                     android:textColor="#000000"
                     android:gravity="center"/>
                 <TextView
-                    android:id="@+id/temp_sensor_4"
+                    android:id="@+id/CUTTINGMOTOR"
                     android:text = "NA"
                     android:layout_width="200dp"
                     android:textColor="#000000"
@@ -270,12 +254,12 @@
                 android:layout_width="fill_parent"
                 android:gravity="center_horizontal">
                 <TextView
-                    android:text="Sensor 5"
+                    android:text="AMBIENT"
                     android:layout_weight="1"
                     android:textColor="#000000"
                     android:gravity="center"/>
                 <TextView
-                    android:id="@+id/temp_sensor_5"
+                    android:id="@+id/AMBIENT"
                     android:text = "NA"
                     android:layout_width="200dp"
                     android:textColor="#000000"
@@ -308,13 +292,13 @@
             </LinearLayout>
             <LinearLayout android:layout_weight="1" android:layout_height="fill_parent" android:layout_width="0dp" android:orientation="vertical" android:background="@drawable/data_border">
                 <TextView
-                    android:text = "Lawny Speed"
+                    android:text = "Acceleration"
                     android:layout_width="match_parent"
                     android:textColor="#000000"
                     android:gravity="center"
                     android:layout_height="40dp"/>
                 <TextView
-                    android:id="@+id/speed_data"
+                    android:id="@+id/acceleration_data"
                     android:text = "NA"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"

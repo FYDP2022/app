@@ -6,16 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/lawny"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Lawny"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.029"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/data_fragment_btn"
         android:layout_width="wrap_content"
@@ -34,14 +24,12 @@
 
     <FrameLayout
         android:id="@+id/view_fragment"
-        android:layout_width="388dp"
-        android:layout_height="617dp"
+        android:layout_width="384dp"
+        android:layout_height="603dp"
         app:layout_constraintBottom_toTopOf="@+id/data_fragment_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.478"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lawny"
-        app:layout_constraintVertical_bias="0.531" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/start_button"

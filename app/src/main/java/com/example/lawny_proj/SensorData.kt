@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.lawny_proj.databinding.FragmentSensorDataBinding
 import android.widget.TextView
+import com.example.lawny_proj.modules.LawnyMqttHelper
 
 
 /**
@@ -19,10 +20,16 @@ import android.widget.TextView
  * create an instance of this fragment.
  */
 
-private var testval: String = ""
 private lateinit var binding: FragmentSensorDataBinding
+private lateinit var activityReference: SensorData.SetWarningInterface
 
 class SensorData : Fragment(R.layout.fragment_sensor_data) {
+
+    interface SetWarningInterface {
+        fun setTempWarning(id: String, showWarning: Boolean)
+        fun setUltrasonicWarning(id: String, showWarning: Boolean)
+        fun setBatteryWarning(id: String, showWarning: Boolean)
+    }
 
     private class TempCheckWatcher(private val text: TextView) : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -32,8 +39,10 @@ class SensorData : Fragment(R.layout.fragment_sensor_data) {
             var text_val = Integer.parseInt(p0.toString())
             if (text_val >= 80) {
                 text.setTextColor(Color.RED)
+                activityReference.setTempWarning(text.id.toString(), true)
             } else {
                 text.setTextColor(Color.BLACK)
+                activityReference.setTempWarning(text.id.toString(), false)
             }
             text.text = p0.toString() + " C"
         }
@@ -45,10 +54,13 @@ class SensorData : Fragment(R.layout.fragment_sensor_data) {
 
         override fun afterTextChanged(p0: Editable?) {
             var text_val = Integer.parseInt(p0.toString())
-            if (text_val <= 10 || text_val > 50) {
+            if (text_val <= 15) {
                 text.setTextColor(Color.RED)
+                activityReference.setUltrasonicWarning(text.id.toString(), true)
             } else {
                 text.setTextColor(Color.BLACK)
+                activityReference.setUltrasonicWarning(text.id.toString(), false)
+
             }
             text.text = p0.toString() + " CMs"
         }
@@ -60,16 +72,16 @@ class SensorData : Fragment(R.layout.fragment_sensor_data) {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        activityReference = context as SetWarningInterface
         binding = FragmentSensorDataBinding.inflate(inflater, container, false)
 
-        binding.tempSensor1.addTextChangedListener(TempCheckWatcher(binding.tempSensor1))
-        binding.tempSensor2.addTextChangedListener(TempCheckWatcher(binding.tempSensor2))
-        binding.tempSensor3.addTextChangedListener(TempCheckWatcher(binding.tempSensor3))
-        binding.tempSensor4.addTextChangedListener(TempCheckWatcher(binding.tempSensor4))
-        binding.tempSensor5.addTextChangedListener(TempCheckWatcher(binding.tempSensor5))
+        binding.BATTERY.addTextChangedListener(TempCheckWatcher(binding.BATTERY))
+        binding.LEFTDRIVE.addTextChangedListener(TempCheckWatcher(binding.LEFTDRIVE))
+        binding.RIGHTDRIVE.addTextChangedListener(TempCheckWatcher(binding.RIGHTDRIVE))
+        binding.CUTTINGMOTOR.addTextChangedListener(TempCheckWatcher(binding.CUTTINGMOTOR))
+        binding.AMBIENT.addTextChangedListener(TempCheckWatcher(binding.AMBIENT))
 
         binding.ultrasonicFront.addTextChangedListener(UltrasonicCheckWatcher(binding.ultrasonicFront))
-        binding.ultrasonicBack.addTextChangedListener(UltrasonicCheckWatcher(binding.ultrasonicBack))
         binding.ultrasonicBackLeft.addTextChangedListener(UltrasonicCheckWatcher(binding.ultrasonicBackLeft))
         binding.ultrasonicBackRight.addTextChangedListener(UltrasonicCheckWatcher(binding.ultrasonicBackRight))
         binding.ultrasonicFrontLeft.addTextChangedListener(UltrasonicCheckWatcher(binding.ultrasonicFrontLeft))
@@ -85,41 +97,14 @@ class SensorData : Fragment(R.layout.fragment_sensor_data) {
                 var text_val = Integer.parseInt(p0.toString())
                 if (text_val > 100 || text_val <= 10) {
                     binding.batteryData.setTextColor(Color.RED)
+                    activityReference.setBatteryWarning(binding.batteryData.id.toString(), true)
                 } else if (text_val > 10 && text_val <= 25) {
                     binding.batteryData.setTextColor(Color.rgb(204,204,0))
                 } else {
                     binding.batteryData.setTextColor(Color.GREEN)
+                    activityReference.setBatteryWarning(binding.batteryData.id.toString(), false)
                 }
                 binding.batteryData.text = p0.toString() + "%"
-            }
-        })
-        binding.gyroscopeData.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            override fun afterTextChanged(p0: Editable?) {
-                var text_val = Integer.parseInt(p0.toString())
-                if (text_val < 10 || text_val > -10) {
-                    binding.batteryData.setTextColor(Color.RED)
-                } else {
-                    binding.batteryData.setTextColor(Color.BLACK)
-                }
-                binding.batteryData.text = p0.toString() + " Degrees"
-            }
-        })
-
-        binding.speedData.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            override fun afterTextChanged(p0: Editable?) {
-                var text_val = Integer.parseInt(p0.toString())
-                if (text_val > 100 || text_val <= 10) {
-                    binding.batteryData.setTextColor(Color.RED)
-                } else if (text_val > 0.4 && text_val < 0.05) {
-                    binding.batteryData.setTextColor(Color.BLACK)
-                }
-                binding.batteryData.text = p0.toString() + " M/s"
             }
         })
 
@@ -128,14 +113,13 @@ class SensorData : Fragment(R.layout.fragment_sensor_data) {
 
     fun setUltrasonic(incoming_ultrasonic: List<String>) {
         when(incoming_ultrasonic[0]) {
-            "F" -> binding.ultrasonicFront.text = incoming_ultrasonic[1]
-            "FL" -> binding.ultrasonicFrontLeft.text = incoming_ultrasonic[1]
-            "L" -> binding.ultrasonicLeft.text = incoming_ultrasonic[1]
-            "BL" -> binding.ultrasonicBackLeft.text = incoming_ultrasonic[1]
-            "B" -> binding.ultrasonicBack.text = incoming_ultrasonic[1]
-            "BR" -> binding.ultrasonicBackRight.text = incoming_ultrasonic[1]
-            "R" -> binding.ultrasonicRight.text = incoming_ultrasonic[1]
-            "FR" -> binding.ultrasonicFrontRight.text = incoming_ultrasonic[1]
+            "F" -> binding.ultrasonicFront.text = incoming_ultrasonic[1].trim()
+            "FL" -> binding.ultrasonicFrontLeft.text = incoming_ultrasonic[1].trim()
+            "L" -> binding.ultrasonicLeft.text = incoming_ultrasonic[1].trim()
+            "BL" -> binding.ultrasonicBackLeft.text = incoming_ultrasonic[1].trim()
+            "BR" -> binding.ultrasonicBackRight.text = incoming_ultrasonic[1].trim()
+            "R" -> binding.ultrasonicRight.text = incoming_ultrasonic[1].trim()
+            "FR" -> binding.ultrasonicFrontRight.text = incoming_ultrasonic[1].trim()
             else -> {
                 Log.e(tag, "Invalid Ultrasonic Sensor Identifier")
             }
@@ -143,18 +127,26 @@ class SensorData : Fragment(R.layout.fragment_sensor_data) {
     }
     fun setTemperature(incoming_temperature: List<String>) {
         when(incoming_temperature[0]) {
-            "Sensor1" -> binding.tempSensor1.text = incoming_temperature[1]
-            "Sensor2" -> binding.tempSensor2.text = incoming_temperature[1]
-            "Sensor3" -> binding.tempSensor3.text = incoming_temperature[1]
-            "Sensor4" -> binding.tempSensor4.text = incoming_temperature[1]
-            "Sensor5" -> binding.tempSensor5.text = incoming_temperature[1]
+            "BATTERY" -> binding.BATTERY.text = incoming_temperature[1].trim()
+            "LEFT_DRIVE" -> binding.LEFTDRIVE.text = incoming_temperature[1].trim()
+            "RIGHT_DRIVE" -> binding.RIGHTDRIVE.text = incoming_temperature[1].trim()
+            "CUTTING_MOTOR" -> binding.CUTTINGMOTOR.text = incoming_temperature[1].trim()
+            "AMBIENT" -> binding.AMBIENT.text = incoming_temperature[1].trim()
             else -> {
                 Log.e(tag, "Invalid Temperature Sensor Identifier")
             }
         }
     }
     fun setBattery(incoming_battery: String) {
-       binding.batteryData.text = incoming_battery
+       binding.batteryData.text = incoming_battery.trim()
+    }
+
+    fun setGyroscope(incoming_gyroscope: String) {
+        binding.gyroscopeData.text = incoming_gyroscope.trim() + " Dgs"
+    }
+
+    fun setAcceleration(incoming_acceleration: String) {
+        binding.accelerationData.text = incoming_acceleration.trim() + " m/s^2"
     }
 
 }

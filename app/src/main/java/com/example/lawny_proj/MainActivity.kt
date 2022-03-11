@@ -1,8 +1,11 @@
 package com.example.lawny_proj
 
+import android.graphics.Color
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.core.view.isVisible
 import com.example.lawny_proj.databinding.ActivityMainBinding
 import com.example.lawny_proj.modules.LawnyMqttHelper
@@ -13,26 +16,11 @@ lateinit var MqttHelper: LawnyMqttHelper
 lateinit var SensorFragment: SensorData
 lateinit var MapFragment: LawnyMap
 
-class MainActivity : AppCompatActivity(), LawnyMqttHelper.SendToFragment {
+class MainActivity : AppCompatActivity(), LawnyMqttHelper.SendToFragment, SensorData.SetWarningInterface {
 
-    override fun sendUltrasonic(incoming_ultrasonic: List<String>) {
-        SensorFragment.setUltrasonic(incoming_ultrasonic)
-    }
-
-    override fun sendTemperature(incoming_temperature: List<String>) {
-        SensorFragment.setTemperature(incoming_temperature)
-    }
-
-    override fun sendBattery(incoming_battery: String) {
-        SensorFragment.setBattery(incoming_battery)
-    }
-
-    override fun setImage(incoming_image: String) {
-        MapFragment.setImage(incoming_image)
-    }
-    override fun setLawnyPosition(incoming_position: List<String>) {
-        MapFragment.setPosition(incoming_position)
-    }
+    var warn_temperature = HashMap<String, Boolean>()
+    var warn_ultrasonic = HashMap<String, Boolean>()
+    var warn_battery = HashMap<String, Boolean>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,12 +33,18 @@ class MainActivity : AppCompatActivity(), LawnyMqttHelper.SendToFragment {
         MapFragment = LawnyMap()
         MqttHelper = LawnyMqttHelper(this)
 
+        binding.errorReading.text = "WARNING - Sensor in Bad State"
+        binding.errorReading.setBackgroundColor(Color.RED)
+        binding.errorReading.visibility = View.INVISIBLE
+
         binding.startButton.setOnClickListener {
             MqttHelper.subscribe("PositionTopic")
             MqttHelper.subscribe("ImageTopic")
             MqttHelper.subscribe("TemperatureTopic")
             MqttHelper.subscribe("BatteryTopic")
             MqttHelper.subscribe("UltrasonicTopic")
+            MqttHelper.subscribe("GyroscopeTopic")
+            MqttHelper.subscribe("AccelerationTopic")
             supportFragmentManager.beginTransaction().apply {
                 add(R.id.view_fragment, SensorFragment)
                 add(R.id.view_fragment, MapFragment)
@@ -83,8 +77,48 @@ class MainActivity : AppCompatActivity(), LawnyMqttHelper.SendToFragment {
 
     }
 
-    override fun onRestart() {
-        super.onRestart()
+    override fun sendUltrasonic(incoming_ultrasonic: List<String>) {
+        SensorFragment.setUltrasonic(incoming_ultrasonic)
+    }
+    override fun sendTemperature(incoming_temperature: List<String>) {
+        SensorFragment.setTemperature(incoming_temperature)
+    }
+    override fun sendBattery(incoming_battery: String) {
+        SensorFragment.setBattery(incoming_battery)
+    }
+    override fun sendGyroscope(incoming_gyroscope: String) {
+        SensorFragment.setGyroscope(incoming_gyroscope)
+    }
+    override fun sendAcceleration(incoming_acceleration: String) {
+        SensorFragment.setAcceleration(incoming_acceleration)
+    }
+    override fun setImage(incoming_image: String) {
+        MapFragment.setImage(incoming_image)
+    }
+    override fun setLawnyPosition(incoming_position: List<String>) {
+        MapFragment.setPosition(incoming_position)
+    }
+
+
+    override fun setTempWarning(id: String, showWarning: Boolean) {
+        warn_temperature[id] = showWarning
+        setWarning()
+    }
+    override fun setUltrasonicWarning(id: String, showWarning: Boolean) {
+        warn_ultrasonic[id] = showWarning
+        setWarning()
+    }
+    override fun setBatteryWarning(id: String, showWarning: Boolean) {
+        warn_battery[id] = showWarning
+        setWarning()
+    }
+
+    fun setWarning() {
+        if (warn_battery.containsValue(true) or warn_temperature.containsValue(true) or warn_ultrasonic.containsValue(true)) {
+            binding.errorReading.visibility = View.VISIBLE
+        } else {
+            binding.errorReading.visibility = View.INVISIBLE
+        }
     }
 
 }
