@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sensor Data"
+        android:backgroundTint="#199196"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -20,24 +21,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Lawny Map"
+        android:backgroundTint="#199196"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <FrameLayout
         android:id="@+id/view_fragment"
-        android:layout_width="384dp"
-        android:layout_height="603dp"
+        android:layout_width="389dp"
+        android:layout_height="644dp"
         app:layout_constraintBottom_toTopOf="@+id/data_fragment_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.478"
-        app:layout_constraintStart_toStartOf="parent" >
-    </FrameLayout>
+        app:layout_constraintStart_toStartOf="parent"></FrameLayout>
 
     <Button
         android:id="@+id/start_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start"
+        android:backgroundTint="#199196"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/lawny_view_fragment_btn"
         app:layout_constraintStart_toEndOf="@+id/data_fragment_btn" />

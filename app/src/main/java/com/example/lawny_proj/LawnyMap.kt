@@ -1,18 +1,19 @@
 package com.example.lawny_proj
 
+import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import com.example.lawny_proj.databinding.FragmentLawnyMapBinding
-import com.example.lawny_proj.databinding.FragmentSensorDataBinding
 import com.example.lawny_proj.modules.LawnyCanvas
-import java.lang.NumberFormatException
+import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * A simple [Fragment] subclass.
@@ -21,17 +22,41 @@ import java.lang.NumberFormatException
  */
 private lateinit var binding: FragmentLawnyMapBinding
 lateinit var lcanvas: LawnyCanvas
+private lateinit var activityReference: LawnyMap.WriteRemoteInterface
+
 
 class LawnyMap : Fragment(R.layout.fragment_lawny_map) {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    interface WriteRemoteInterface {
+        fun writeRemote(movement: String)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentLawnyMapBinding.inflate(layoutInflater)
         lcanvas = LawnyCanvas(binding)
+
+        activityReference = context as WriteRemoteInterface
+
+        binding.touchpad.setOnTouchListener { p0, p1 ->
+            val x = p1.x / p0.width
+            val y = p1.y / p0.height
+            Log.d("X POS", x.toString())
+            Log.d("Y POS", y.toString())
+            when  {
+                (0 <= x && x < 0.333) &&  (0.666 <= y && y < 1) -> activityReference.writeRemote("BWD_LEFT")
+                (0.666 <= x && x < 1) &&  (0.666 <= y && y < 1) -> activityReference.writeRemote("BWD_RIGHT")
+                (0 <= x && x < 0.333) &&  (0.333 <= y && y < 0.666) -> activityReference.writeRemote("POINT_LEFT")
+                (0.666 <= x && x < 1) &&  (0.333 <= y && y < 0.666) -> activityReference.writeRemote("POINT_RIGHT")
+                (0 <= x && x < 0.333) &&  (0 <= y && y < 0.333) -> activityReference.writeRemote("FWD_LEFT")
+                (0.666 <= x && x < 1) &&  (0 <= y && y < 0.333) -> activityReference.writeRemote("FWD_RIGHT")
+                (0.333 <= x && x < 0.666) &&  (0 <= y && y < 0.666) -> activityReference.writeRemote("FORWARD")
+                (0.333 <= x && x < 0.666) &&  (0.666 <= y && y < 1) -> activityReference.writeRemote("REVERSE")
+                p1.action == MotionEvent.ACTION_UP -> activityReference.writeRemote("STOP")
+            }
+            true
+        }
         return binding.root
     }
 

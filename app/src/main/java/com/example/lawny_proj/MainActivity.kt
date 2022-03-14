@@ -17,7 +17,7 @@ lateinit var MqttHelper: LawnyMqttHelper
 lateinit var SensorFragment: SensorData
 lateinit var MapFragment: LawnyMap
 
-class MainActivity : AppCompatActivity(), LawnyMqttHelper.SendToFragment, SensorData.SetWarningInterface {
+class MainActivity : AppCompatActivity(), LawnyMqttHelper.SendToFragment, SensorData.SetWarningInterface, LawnyMap.WriteRemoteInterface {
 
     var warn_temperature = HashMap<String, Boolean>()
     var warn_ultrasonic = HashMap<String, Boolean>()
@@ -128,6 +128,10 @@ class MainActivity : AppCompatActivity(), LawnyMqttHelper.SendToFragment, Sensor
         } else {
             binding.errorReading.visibility = View.INVISIBLE
         }
+    }
+
+    override fun writeRemote(movement: String) {
+        MqttHelper.publish("RemoteTopic", movement)
     }
 
 }
