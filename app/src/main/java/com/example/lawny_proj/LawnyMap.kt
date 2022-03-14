@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import com.example.lawny_proj.databinding.FragmentLawnyMapBinding
 import com.example.lawny_proj.databinding.FragmentSensorDataBinding
@@ -55,5 +56,13 @@ class LawnyMap : Fragment(R.layout.fragment_lawny_map) {
         } catch (nfe: NumberFormatException) {
             println("Could not parse $nfe")
         }
+    }
+
+    fun setGyroscope(incoming_gyroscope: String) {
+        binding.gyroscopeData.text = incoming_gyroscope.trim() + "\u00B0"
+    }
+
+    fun setAcceleration(incoming_acceleration: String) {
+        binding.accelerationData.text = HtmlCompat.fromHtml(incoming_acceleration.trim() + "m/s<sup><small><small>2</small></small></sup>", HtmlCompat.FROM_HTML_MODE_LEGACY)
     }
 }

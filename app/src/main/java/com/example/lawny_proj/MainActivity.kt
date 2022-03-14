@@ -1,5 +1,6 @@
 package com.example.lawny_proj
 
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
@@ -83,14 +84,22 @@ class MainActivity : AppCompatActivity(), LawnyMqttHelper.SendToFragment, Sensor
     override fun sendTemperature(incoming_temperature: List<String>) {
         SensorFragment.setTemperature(incoming_temperature)
     }
-    override fun sendBattery(incoming_battery: String) {
-        SensorFragment.setBattery(incoming_battery)
+    override fun setBattery(incoming_battery: String) {
+        val incoming = Integer.parseInt(incoming_battery)
+        binding.batteryBar.progress = incoming
+        if (incoming in 26..100) {
+            binding.batteryBar.progressTintList = ColorStateList.valueOf(Color.GREEN)
+        } else if (incoming in 11..25) {
+            binding.batteryBar.progressTintList = ColorStateList.valueOf(Color.YELLOW)
+        } else {
+            binding.batteryBar.progressTintList = ColorStateList.valueOf(Color.RED)
+        }
     }
     override fun sendGyroscope(incoming_gyroscope: String) {
-        SensorFragment.setGyroscope(incoming_gyroscope)
+        MapFragment.setGyroscope(incoming_gyroscope)
     }
     override fun sendAcceleration(incoming_acceleration: String) {
-        SensorFragment.setAcceleration(incoming_acceleration)
+        MapFragment.setAcceleration(incoming_acceleration)
     }
     override fun setImage(incoming_image: String) {
         MapFragment.setImage(incoming_image)

@@ -11,14 +11,14 @@ class LawnyMqttHelper(context: Context) {
     interface SendToFragment {
         fun sendUltrasonic(incoming_ultrasonic: List<String>)
         fun sendTemperature(incoming_temperature: List<String>)
-        fun sendBattery(incoming_battery: String)
+        fun setBattery(incoming_battery: String)
         fun setImage(incoming_image: String)
         fun setLawnyPosition(incoming_position: List<String>)
         fun sendGyroscope(incoming_gyroscope: String)
         fun sendAcceleration(incoming_acceleration: String)
     }
     var mqttAndroidClient: MqttAndroidClient
-    val serverUri = "tcp://10.0.0.170:1883"
+    val serverUri = "tcp://10.0.0.175:1883"
     val clientId = "LawnyClient"
     val tag = "Lawny_Mqtt_Client"
 
@@ -44,7 +44,7 @@ class LawnyMqttHelper(context: Context) {
                 when(topic) {
                     "TemperatureTopic" -> activityReference.sendTemperature(message.toString().split(":"))
                     "UltrasonicTopic" -> activityReference.sendUltrasonic(message.toString().split(":"))
-                    "BatteryTopic" -> activityReference.sendBattery(message.toString())
+                    "BatteryTopic" -> activityReference.setBattery(message.toString())
                     "ImageTopic" -> activityReference.setImage(message.toString())
                     "PositionTopic" -> activityReference.setLawnyPosition(message.toString().split(":"))
                     "GyroscopeTopic" -> activityReference.sendGyroscope(message.toString())

@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.lawny_proj.databinding.FragmentSensorDataBinding
 import android.widget.TextView
+import androidx.core.text.HtmlCompat
 import com.example.lawny_proj.modules.LawnyMqttHelper
 
 
@@ -44,7 +45,7 @@ class SensorData : Fragment(R.layout.fragment_sensor_data) {
                 text.setTextColor(Color.BLACK)
                 activityReference.setTempWarning(text.id.toString(), false)
             }
-            text.text = p0.toString() + " C"
+            text.text = p0.toString() + "\u2103"
         }
     }
 
@@ -62,7 +63,7 @@ class SensorData : Fragment(R.layout.fragment_sensor_data) {
                 activityReference.setUltrasonicWarning(text.id.toString(), false)
 
             }
-            text.text = p0.toString() + " CMs"
+            text.text = HtmlCompat.fromHtml(p0.toString() + "cm<small>s</small>", HtmlCompat.FROM_HTML_MODE_LEGACY)
         }
     }
 
@@ -88,25 +89,6 @@ class SensorData : Fragment(R.layout.fragment_sensor_data) {
         binding.ultrasonicFrontRight.addTextChangedListener(UltrasonicCheckWatcher(binding.ultrasonicFrontRight))
         binding.ultrasonicLeft.addTextChangedListener(UltrasonicCheckWatcher(binding.ultrasonicLeft))
         binding.ultrasonicRight.addTextChangedListener(UltrasonicCheckWatcher(binding.ultrasonicRight))
-
-        binding.batteryData.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            override fun afterTextChanged(p0: Editable?) {
-                var text_val = Integer.parseInt(p0.toString())
-                if (text_val > 100 || text_val <= 10) {
-                    binding.batteryData.setTextColor(Color.RED)
-                    activityReference.setBatteryWarning(binding.batteryData.id.toString(), true)
-                } else if (text_val > 10 && text_val <= 25) {
-                    binding.batteryData.setTextColor(Color.rgb(204,204,0))
-                } else {
-                    binding.batteryData.setTextColor(Color.GREEN)
-                    activityReference.setBatteryWarning(binding.batteryData.id.toString(), false)
-                }
-                binding.batteryData.text = p0.toString() + "%"
-            }
-        })
 
         return binding.root
     }
@@ -136,17 +118,6 @@ class SensorData : Fragment(R.layout.fragment_sensor_data) {
                 Log.e(tag, "Invalid Temperature Sensor Identifier")
             }
         }
-    }
-    fun setBattery(incoming_battery: String) {
-       binding.batteryData.text = incoming_battery.trim()
-    }
-
-    fun setGyroscope(incoming_gyroscope: String) {
-        binding.gyroscopeData.text = incoming_gyroscope.trim() + " Dgs"
-    }
-
-    fun setAcceleration(incoming_acceleration: String) {
-        binding.accelerationData.text = incoming_acceleration.trim() + " m/s^2"
     }
 
 }

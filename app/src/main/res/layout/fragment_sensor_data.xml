@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:paddingLeft="25dp"
-            android:background="@color/purple_200">
+            android:background="#364F6B">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -38,9 +38,10 @@
 
         <TableLayout
             android:id="@+id/ultrasonic_table"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="#3FC1C9">
 
             <TableRow
                 android:layout_height="wrap_content"
@@ -163,13 +164,14 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="143dp"
-        android:layout_marginTop="290dp">
+        android:layout_marginTop="290dp"
+        card_view:cardCornerRadius="12dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:paddingLeft="25dp"
-            android:background="@color/purple_200">
+            android:background="#364F6B">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -181,9 +183,10 @@
 
         <TableLayout
             android:id="@+id/temperature_table"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="#3FC1C9">
 
             <TableRow
                 android:layout_height="wrap_content"
@@ -268,62 +271,6 @@
         </TableLayout>
 
     </androidx.cardview.widget.CardView>
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="133dp"
-        android:layout_marginTop="463dp">
 
-        <LinearLayout android:orientation="horizontal" android:layout_height="fill_parent" android:layout_width="fill_parent" >
-            <LinearLayout android:layout_weight="1" android:layout_height="fill_parent" android:layout_width="0dp" android:orientation="vertical" android:background="@drawable/data_border">
-                <TextView
-                    android:text = "Gyroscope Angle"
-                    android:layout_width="match_parent"
-                    android:textColor="#000000"
-                    android:gravity="center"
-                    android:layout_height="40dp"/>
-                <TextView
-                    android:id="@+id/gyroscope_data"
-                    android:text = "NA"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="15dp"
-                    android:textColor="#000000"
-                    android:gravity="center"/>
-            </LinearLayout>
-            <LinearLayout android:layout_weight="1" android:layout_height="fill_parent" android:layout_width="0dp" android:orientation="vertical" android:background="@drawable/data_border">
-                <TextView
-                    android:text = "Acceleration"
-                    android:layout_width="match_parent"
-                    android:textColor="#000000"
-                    android:gravity="center"
-                    android:layout_height="40dp"/>
-                <TextView
-                    android:id="@+id/acceleration_data"
-                    android:text = "NA"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="15dp"
-                    android:textColor="#000000"
-                    android:gravity="center"/>
-            </LinearLayout>
-            <LinearLayout android:layout_weight="1" android:layout_height="fill_parent" android:layout_width="0dp" android:orientation="vertical" android:background="@drawable/data_border">
-                <TextView
-                    android:text = "Battery"
-                    android:layout_width="match_parent"
-                    android:textColor="#000000"
-                    android:gravity="center"
-                    android:layout_height="40dp"/>
-                <TextView
-                    android:id="@+id/battery_data"
-                    android:text = "NA"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="15dp"
-                    android:textColor="#000000"
-                    android:gravity="center"/>
-            </LinearLayout>
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

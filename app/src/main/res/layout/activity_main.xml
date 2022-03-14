@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bck_2"
     tools:context=".MainActivity">
 
     <Button
@@ -29,7 +30,8 @@
         app:layout_constraintBottom_toTopOf="@+id/data_fragment_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.478"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" >
+    </FrameLayout>
 
     <Button
         android:id="@+id/start_button"
@@ -45,6 +47,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/battery_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="61dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="12dp"
+        android:progressBackgroundTint="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
