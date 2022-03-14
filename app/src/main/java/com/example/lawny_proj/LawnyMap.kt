@@ -3,6 +3,8 @@ package com.example.lawny_proj
 import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,7 +15,6 @@ import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import com.example.lawny_proj.databinding.FragmentLawnyMapBinding
 import com.example.lawny_proj.modules.LawnyCanvas
-import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * A simple [Fragment] subclass.
@@ -26,7 +27,27 @@ private lateinit var activityReference: LawnyMap.WriteRemoteInterface
 
 
 class LawnyMap : Fragment(R.layout.fragment_lawny_map) {
+    var x = -1.0
+    var y = -1.0
+    var action = MotionEvent.ACTION_UP
+    val remoteHandler = Handler(Looper.getMainLooper())
 
+    fun handler_method() {
+        if (action != MotionEvent.ACTION_UP) {
+            when {
+                (0 <= x && x < 0.333) &&  (0.666 <= y && y < 1) -> activityReference.writeRemote("BWD_LEFT")
+                (0.666 <= x && x < 1) &&  (0.666 <= y && y < 1) -> activityReference.writeRemote("BWD_RIGHT")
+                (0 <= x && x < 0.333) &&  (0.333 <= y && y < 0.666) -> activityReference.writeRemote("POINT_LEFT")
+                (0.666 <= x && x < 1) &&  (0.333 <= y && y < 0.666) -> activityReference.writeRemote("POINT_RIGHT")
+                (0 <= x && x < 0.333) &&  (0 <= y && y < 0.333) -> activityReference.writeRemote("FWD_LEFT")
+                (0.666 <= x && x < 1) &&  (0 <= y && y < 0.333) -> activityReference.writeRemote("FWD_RIGHT")
+                (0.333 <= x && x < 0.666) &&  (0 <= y && y < 0.666) -> activityReference.writeRemote("FORWARD")
+                (0.333 <= x && x < 0.666) &&  (0.666 <= y && y < 1) -> activityReference.writeRemote("REVERSE")
+            }
+        } else {
+            activityReference.writeRemote("STOP")
+        }
+    }
     interface WriteRemoteInterface {
         fun writeRemote(movement: String)
     }
@@ -40,23 +61,21 @@ class LawnyMap : Fragment(R.layout.fragment_lawny_map) {
         activityReference = context as WriteRemoteInterface
 
         binding.touchpad.setOnTouchListener { p0, p1 ->
-            val x = p1.x / p0.width
-            val y = p1.y / p0.height
+            x = (p1.x / p0.width).toDouble()
+            y = (p1.y / p0.height).toDouble()
+            action = p1.action
             Log.d("X POS", x.toString())
             Log.d("Y POS", y.toString())
-            when  {
-                (0 <= x && x < 0.333) &&  (0.666 <= y && y < 1) -> activityReference.writeRemote("BWD_LEFT")
-                (0.666 <= x && x < 1) &&  (0.666 <= y && y < 1) -> activityReference.writeRemote("BWD_RIGHT")
-                (0 <= x && x < 0.333) &&  (0.333 <= y && y < 0.666) -> activityReference.writeRemote("POINT_LEFT")
-                (0.666 <= x && x < 1) &&  (0.333 <= y && y < 0.666) -> activityReference.writeRemote("POINT_RIGHT")
-                (0 <= x && x < 0.333) &&  (0 <= y && y < 0.333) -> activityReference.writeRemote("FWD_LEFT")
-                (0.666 <= x && x < 1) &&  (0 <= y && y < 0.333) -> activityReference.writeRemote("FWD_RIGHT")
-                (0.333 <= x && x < 0.666) &&  (0 <= y && y < 0.666) -> activityReference.writeRemote("FORWARD")
-                (0.333 <= x && x < 0.666) &&  (0.666 <= y && y < 1) -> activityReference.writeRemote("REVERSE")
-                p1.action == MotionEvent.ACTION_UP -> activityReference.writeRemote("STOP")
-            }
             true
         }
+
+        remoteHandler.post(object : Runnable {
+            override fun run() {
+                handler_method()
+                remoteHandler.postDelayed(this, 200)
+            }
+        })
+
         return binding.root
     }
 

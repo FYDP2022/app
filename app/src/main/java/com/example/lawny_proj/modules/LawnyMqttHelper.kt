@@ -89,7 +89,7 @@ class LawnyMqttHelper(context: Context) {
         try {
             mqttAndroidClient.publish(topic, msg.toByteArray(), qos, retained, null, object : IMqttActionListener{
                 override fun onSuccess(asyncActionToken: IMqttToken?) {
-                    Log.d(tag,"Published to $topic successfully")
+                    Log.d(tag,"Published to $topic successfully with message $msg")
                 }
 
                 override fun onFailure(asyncActionToken: IMqttToken?, exception: Throwable?) {
