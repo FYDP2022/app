@@ -6,19 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".SensorData">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="Lawny Sensor Data"
-        android:textColor="@color/black"
-        android:textSize="30dp" />
-
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:gravity="top"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="110dp"
         card_view:cardBackgroundColor="@color/white"
         card_view:cardCornerRadius="12dp">
 
@@ -164,7 +156,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="143dp"
-        android:layout_marginTop="290dp"
+        android:layout_marginTop="370dp"
         card_view:cardCornerRadius="12dp">
 
         <LinearLayout
@@ -193,7 +185,7 @@
                 android:layout_width="fill_parent"
                 android:gravity="center_horizontal">
                 <TextView
-                    android:text="BATTERY"
+                    android:text="Battery"
                     android:layout_weight="1"
                     android:textColor="#000000"
                     android:gravity="center"/>
@@ -209,7 +201,7 @@
                 android:layout_width="fill_parent"
                 android:gravity="center_horizontal">
                 <TextView
-                    android:text="LEFT DRIVE"
+                    android:text="Left Drive"
                     android:layout_weight="1"
                     android:textColor="#000000"
                     android:gravity="center"/>
@@ -225,7 +217,7 @@
                 android:layout_width="fill_parent"
                 android:gravity="center_horizontal">
                 <TextView
-                    android:text="RIGHT DRIVE"
+                    android:text="Right Drive"
                     android:layout_weight="1"
                     android:textColor="#000000"
                     android:gravity="center"/>
@@ -241,7 +233,7 @@
                 android:layout_width="fill_parent"
                 android:gravity="center_horizontal">
                 <TextView
-                    android:text="CUTTING MOTOR"
+                    android:text="Cutting Motor"
                     android:layout_weight="1"
                     android:textColor="#000000"
                     android:gravity="center"/>
@@ -257,7 +249,7 @@
                 android:layout_width="fill_parent"
                 android:gravity="center_horizontal">
                 <TextView
-                    android:text="AMBIENT"
+                    android:text="Ambient"
                     android:layout_weight="1"
                     android:textColor="#000000"
                     android:gravity="center"/>

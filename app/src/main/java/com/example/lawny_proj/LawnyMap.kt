@@ -72,7 +72,7 @@ class LawnyMap : Fragment(R.layout.fragment_lawny_map) {
         remoteHandler.post(object : Runnable {
             override fun run() {
                 handler_method()
-                remoteHandler.postDelayed(this, 200)
+                remoteHandler.postDelayed(this, 250)
             }
         })
 

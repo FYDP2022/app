@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity(), LawnyMqttHelper.SendToFragment, Sensor
             supportFragmentManager.beginTransaction().apply {
                 add(R.id.view_fragment, SensorFragment)
                 add(R.id.view_fragment, MapFragment)
-                hide(MapFragment)
+                hide(SensorFragment)
                 commit()
             }
             MqttHelper.publish("StartStopTopic", "START")
