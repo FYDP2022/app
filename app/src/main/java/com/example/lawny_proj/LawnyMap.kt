@@ -31,9 +31,11 @@ class LawnyMap : Fragment(R.layout.fragment_lawny_map) {
     var y = -1.0
     var action = MotionEvent.ACTION_UP
     val remoteHandler = Handler(Looper.getMainLooper())
+    var stopped = false
 
     fun handler_method() {
         if (action != MotionEvent.ACTION_UP) {
+            stopped = false
             when {
                 (0 <= x && x < 0.333) &&  (0.666 <= y && y < 1) -> activityReference.writeRemote("BWD_LEFT")
                 (0.666 <= x && x < 1) &&  (0.666 <= y && y < 1) -> activityReference.writeRemote("BWD_RIGHT")
@@ -45,7 +47,10 @@ class LawnyMap : Fragment(R.layout.fragment_lawny_map) {
                 (0.333 <= x && x < 0.666) &&  (0.666 <= y && y < 1) -> activityReference.writeRemote("REVERSE")
             }
         } else {
-            activityReference.writeRemote("STOP")
+            if (stopped == false) {
+                activityReference.writeRemote("STOP")
+                stopped = true
+            }
         }
     }
     interface WriteRemoteInterface {
@@ -72,7 +77,7 @@ class LawnyMap : Fragment(R.layout.fragment_lawny_map) {
         remoteHandler.post(object : Runnable {
             override fun run() {
                 handler_method()
-                remoteHandler.postDelayed(this, 250)
+                remoteHandler.postDelayed(this, 100)
             }
         })
 

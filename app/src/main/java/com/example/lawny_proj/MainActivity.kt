@@ -132,6 +132,7 @@ class MainActivity : AppCompatActivity(), LawnyMqttHelper.SendToFragment, Sensor
 
     override fun writeRemote(movement: String) {
         MqttHelper.publish("RemoteTopic", movement)
+        Log.d("SENT REMOTE", movement)
     }
 
 }

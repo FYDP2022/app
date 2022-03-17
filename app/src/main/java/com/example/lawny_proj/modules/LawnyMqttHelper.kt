@@ -18,7 +18,7 @@ class LawnyMqttHelper(context: Context) {
         fun sendAcceleration(incoming_acceleration: String)
     }
     var mqttAndroidClient: MqttAndroidClient
-    val serverUri = "tcp://10.0.0.175:1883"
+    val serverUri = "tcp://10.0.0.171:1883"
     val clientId = "LawnyClient"
     val tag = "Lawny_Mqtt_Client"
 
